@@ -15,7 +15,8 @@ module.exports = {
         {
           model: User,
           as: 'user'
-        }
+        },
+        'categories'
       ]
     }).then(task => {
       res.render('tasks/show', { task })
@@ -52,8 +53,21 @@ module.exports = {
         res.json(err)
       })
   },
-
   update: function (req, res) {
+    // task.addCategories([1,5])
+    Task.findByPk(req.params.id).then(task => {
+      task.description = req.body.description
+      task.save().then(() => {
+        let categoryIds = req.body.categories.split(',') //"1,5,4" => [1,5,4]
+
+        task.addCategories(categoryIds).then(() => {
+          res.redirect(`/tasks/${task.id}`)
+        })
+      })
+    })
+  },
+
+  /*   update: function (req, res) {
     Task.update(
       { description: req.body.description },
       {
@@ -65,7 +79,7 @@ module.exports = {
       //res.json(response)
       res.redirect('/tasks/' + req.params.id)
     })
-  },
+  }, */
 
   new: function (req, res) {
     res.render('tasks/new')
