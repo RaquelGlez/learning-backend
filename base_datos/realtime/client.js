@@ -1,6 +1,6 @@
 const io = require('socket.io-client')
 
-let socket = io.connect('http://localhost:3000', { reconnect: true })
+let socket = io.connect('http://localhost:3000', { reconnection: true })
 
 socket.on('connect', function () {
   console.log('\n\nSocket connected from NodeJS\n\n')

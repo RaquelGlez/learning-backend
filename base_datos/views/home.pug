@@ -13,7 +13,11 @@ html
     script. 
       socket=io.connect()
 
-      socket.on('count_updated', function(data){
-        console.log(data)
+      socket.on('count_updated',function(data){
+        console.log(data);
         document.querySelector('#connected').innerHTML = data.count
+      })
+      
+      socket.on('new_task',function(data){
+        console.log(data);
       })
